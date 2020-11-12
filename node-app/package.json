@@ -1,0 +1,26 @@
+{
+  "name": "test-app",
+  "version": "1.0.0",
+  "description": "some test nodejs app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Lockhart01/node-test.git"
+  },
+  "keywords": [
+    "test",
+    "nodejs"
+  ],
+  "author": "Lockhart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lockhart01/node-test/issues"
+  },
+  "homepage": "https://github.com/Lockhart01/node-test#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
