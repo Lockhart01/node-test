@@ -2,7 +2,7 @@
 
 #builds the image with the env var VERSION as part of the tag
 
-docker build --tag medraut/node-app:${VERSION}
+docker build --tag medraut/node-app:${VERSION} .
 
 #Logs into docker hub
 
