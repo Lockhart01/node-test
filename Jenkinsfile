@@ -22,6 +22,7 @@ pipeline{
                 script{
                     env.VERSION = sh(script: 'cat node-app/package.json | grep version | cut -d":" -f2 | cut -d "\\"" -f2', , returnStdout: true).trim()
                 }
+                sh 'echo ${VERSION}'
                 stash includes: '', name: 'app', allowEmpty: false
             }
         }
@@ -31,7 +32,7 @@ pipeline{
             }
             steps{
                 unstash 'app'
-                withCreentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]){
+                withCredentials([usernamePassword(credentialsId: 'Dockerhub', passwordVariable: 'DPASSWORD', usernameVariable: 'DUSER')]){
                     sh 'chmod +x build.sh && ./build.sh'
                 }
 
