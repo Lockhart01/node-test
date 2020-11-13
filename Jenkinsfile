@@ -20,7 +20,7 @@ pipeline{
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace'],[$class: 'LocalBranch', localBranch: "**"]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Lockhart01/node-test.git']]])
                 script{
-                    env.VERSION = sh(script: 'cat node-app/package.json | grep version | cut -d":" -f 2 | cut -d "\"" -f2', , returnStdout: true).trim()
+                    env.VERSION = sh(script: 'cat node-app/package.json | grep version | cut -d":" -f2 | cut -d "\\"" -f2', , returnStdout: true).trim()
                 }
                 stash includes: '', name: 'app', allowEmpty: false
             }
