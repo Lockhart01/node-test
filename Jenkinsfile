@@ -11,7 +11,7 @@ pipeline{
             post{
                 always{
                     script{
-                        currentBuild.displayName = "spring-app-${NAME}"
+                        currentBuild.displayName = "node-app-${NAME}"
                     }
                 }
             }
