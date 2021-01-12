@@ -1,0 +1,39 @@
+pipeline{
+    parameters{
+         string(name: 'SERVER', defaultValue: '', description: 'ip of the server to deploy')
+         string(name: 'VERSION', defaultValue: '1.0.0', description: 'Tag of the image to deploy to the server')
+    }
+    agent any
+    stages{
+        stage('prepare'){
+            steps{
+                script{
+                    Date date = new Date()
+                    env.NAME = date.format("yyyy-MM-dd")
+                }
+            }
+            post{
+                always{
+                    script{
+                        currentBuild.displayName = "deploy-of-${NAME}"
+                    }
+                }
+            }
+        }
+        stage('deploy'){
+            steps{
+                    withCredentials([sshUserPrivateKey(credentialsId: 'docker-slave-key', keyFileVariable: 'SSHKEY', passphraseVariable: '', usernameVariable: '')]) {
+                    sh 'wget https://raw.githubusercontent.com/Lockhart01/node-test/master/deploy.sh && chmod +x deploy.sh'
+                    sh 'scp -i ${SSHKEY} deploy.sh jenkins@${SERVER}:/home/jenkins'
+                    sh 'ssh -i ${SSHKEY} jenkins@${SERVER}  /home/jenkins/deploy.sh ${VERSION}'
+                }
+            }
+        }
+        
+    }
+    post{
+        always{
+            step([$class: 'WsCleanup'])
+        }
+    }
+}
